@@ -12,7 +12,7 @@ class InterestGroup < ActiveRecord::Base
   end
 
   def favorite
-    posts.order("comments_count DESC").limit(1).take
+    posts.order("comments_count DESC").limit(3).take
   end
 
 end

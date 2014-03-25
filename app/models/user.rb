@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
 
   def name_of_groups
     interest_groups.map { |g| g.group_name }
-    #interest_groups.pluck(:group_name)
   end
 
   def count_posts
