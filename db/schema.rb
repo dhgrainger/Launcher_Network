@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321214635) do
+ActiveRecord::Schema.define(version: 20140325125523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,14 +26,13 @@ ActiveRecord::Schema.define(version: 20140321214635) do
 
   create_table "interest_groups", force: true do |t|
     t.string   "group_name",           null: false
-    t.string   "creator",              null: false
     t.text     "optional_description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id",           null: false
   end
 
   create_table "posts", force: true do |t|
-    t.string   "author",            null: false
     t.string   "title",             null: false
     t.text     "body",              null: false
     t.date     "date",              null: false

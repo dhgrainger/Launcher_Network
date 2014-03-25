@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   validates :email_address, presence: true
   validates :launcher_or_ee, presence: true, inclusion: { in: ['launcher', 'ee'] }
 
+  has_many :created_groups, foreign_key: 'creator_id', class_name: 'InterestGroup'
   has_many :posts
   has_many :comments
   has_many :user_groups
