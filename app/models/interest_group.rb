@@ -7,6 +7,12 @@ class InterestGroup < ActiveRecord::Base
   has_many :users, through: :user_groups, source: :user
   has_many :posts
 
-  # def self.favorite
-  #   order
+  def numberofposts
+    posts.count
+  end
+
+  def favorite
+    posts.order("comments_count DESC").limit(1).take
+  end
+
 end

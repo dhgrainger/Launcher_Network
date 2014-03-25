@@ -10,4 +10,16 @@ class User < ActiveRecord::Base
   has_many :user_groups
   has_many :interest_groups, through: :user_groups, source: :interest_group
 
+  def name_of_groups
+    interest_groups.map { |g| g.group_name }
+    #interest_groups.pluck(:group_name)
+  end
+
+  def count_posts
+    posts.count
+  end
+
+  def count_comments
+    comments.count
+  end
 end

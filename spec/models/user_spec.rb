@@ -5,7 +5,7 @@ describe User do
 let!(:user) { User.create(first_name: 'lydia', last_name: 'ho', email_address: 'lydia@sloppymail.com', launcher_or_ee: 'launcher') }
 let!(:post) { Post.create(user: user, title: 'blah', body: 'blah', date: '11/12/2004', interest_group: interest_group) }
 let!(:comment) {Comment.create(body: "i'm hungry", user: user, post: post)}
-let!(:interest_group) { InterestGroup.create(group_name: 'Good Christians', creator: user)}
+let!(:interest_group) { InterestGroup.create(group_name: 'really good Christians', creator: user)}
 
   describe 'validations' do
     context "when given valid attributes" do
@@ -52,5 +52,33 @@ let!(:interest_group) { InterestGroup.create(group_name: 'Good Christians', crea
     it 'should have many comments' do
       expect(user.comments).to include(comment)
     end
+  end
+
+  describe 'methods' do
+    it 'should name all of the groups a user belongs to' do
+    interest_group1 = InterestGroup.create(group_name: 'Good Christians', creator: user)
+    interest_group2 = InterestGroup.create(group_name: 'Bad Christians', creator: user)
+    interest_group3 = InterestGroup.create(group_name: 'Okay Christians', creator: user)
+    user.interest_groups << interest_group1
+    user.interest_groups << interest_group2
+    user.interest_groups << interest_group3
+
+    expect(user.name_of_groups).to eql(['Good Christians', 'Bad Christians', 'Okay Christians'])
+    end
+
+    it 'should count the number of posts a user has made' do
+     post1 = Post.create(user: user, title: 'blah', body: 'blah', date: '11/12/2004', interest_group: interest_group)
+     post2 = Post.create(user: user, title: 'blah', body: 'blah', date: '11/12/2004', interest_group: interest_group)
+     post3 = Post.create(user: user, title: 'blah', body: 'blah', date: '11/12/2004', interest_group: interest_group)
+     expect(user.count_posts).to eql(4)
+    end
+
+    it 'should count the number of comments a user has made' do
+     c1 = Comment.create(body: "i'm hungry", user: user, post: post)
+     c2 = Comment.create(body: "i'm hungry", user: user, post: post)
+     c3 = Comment.create(body: "i'm hungry", user: user, post: post)
+     expect(user.count_comments).to eql(4)
+    end
+
   end
 end
